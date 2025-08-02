@@ -20,7 +20,7 @@ const Simulador = () => {
     if (!nomeEmpresa || !descricaoServico) {
       toast({
         title: "Campos obrigatórios",
-        description: "Por favor, preencha o nome da empresa e a descrição do serviço.",
+        description: "Por favor, preencha o nome da empresa e a descrição do serviço, se não vai sair no rola comigo!",
         variant: "destructive",
       });
       return;
