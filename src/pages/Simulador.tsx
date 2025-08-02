@@ -47,26 +47,28 @@ const Simulador = () => {
 
       const data = await response.text();
       
-      // Tentar parsear como JSON se possível
-      let formattedData;
+      // Processar e limpar o texto completamente
+      let processedData = data;
+      
+      // Tentar parsear como JSON primeiro
       try {
         const jsonData = JSON.parse(data);
-        formattedData = jsonData.output || data;
+        processedData = jsonData.output || data;
       } catch {
-        formattedData = data;
+        // Se não for JSON válido, limpar manualmente
+        processedData = data
+          .replace(/^\s*\{\s*"output"\s*:\s*"/, '') // Remove {"output":"
+          .replace(/"\s*\}\s*$/, '') // Remove "}
+          .replace(/^"/, '') // Remove aspas do início
+          .replace(/"$/, ''); // Remove aspas do final
       }
       
-      // Processar e limpar o texto
-      let processedData = formattedData
+      // Processar quebras de linha e limpar caracteres de escape
+      processedData = processedData
         .replace(/\\n/g, '\n')
-        .replace(/^\{?"?output"?:"?/i, '')
-        .replace(/"?\}?$/, '')
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, '\\')
         .trim();
-      
-      // Remover aspas no início e fim se existirem
-      if (processedData.startsWith('"') && processedData.endsWith('"')) {
-        processedData = processedData.slice(1, -1);
-      }
       
       setProposta(processedData);
       
