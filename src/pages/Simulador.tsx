@@ -27,63 +27,15 @@ const Simulador = () => {
     }
 
     setIsLoading(true);
+    setProposta("Sua proposta sera gerada aqui assim que a IA for conectada");
     
-    // Simulação de chamada da IA
+    // Simulação de processamento da IA
     setTimeout(() => {
-      const propostaGerada = `
-# PROPOSTA DE CONSULTORIA EMPRESARIAL
-## Empresa: ${nomeEmpresa}
-
-### DIAGNÓSTICO INICIAL
-Baseado na descrição fornecida: "${descricaoServico}", nossa IA identificou as seguintes oportunidades:
-
-### SOLUÇÕES RECOMENDADAS
-
-**1. ANÁLISE ESTRATÉGICA COMPLETA**
-- Avaliação de mercado e posicionamento competitivo
-- Identificação de gaps operacionais
-- Mapeamento de processos críticos
-- Valor: R$ 3.500
-
-**2. IMPLEMENTAÇÃO DE MELHORIAS**
-- Otimização de processos identificados
-- Automação de tarefas repetitivas
-- Treinamento de equipes
-- Valor: R$ 5.800
-
-**3. ACOMPANHAMENTO E KPIs**
-- Dashboard personalizado de performance
-- Métricas de ROI em tempo real
-- Relatórios mensais de progresso
-- Valor: R$ 2.200
-
-### CRONOGRAMA ESTIMADO
-- **Fase 1 (Diagnóstico):** 2 semanas
-- **Fase 2 (Implementação):** 4-6 semanas  
-- **Fase 3 (Acompanhamento):** Ongoing
-
-### INVESTIMENTO TOTAL
-**R$ 11.500** (Parcelamento em até 6x sem juros)
-
-### GARANTIAS
-✅ Satisfação garantida ou seu dinheiro de volta
-✅ Suporte técnico por 6 meses incluído
-✅ Revisões trimestrais sem custo adicional
-
-### PRÓXIMOS PASSOS
-1. Agendar reunião de alinhamento (30 min)
-2. Assinatura do contrato e início imediato
-3. Primeiro relatório em 7 dias
-
-*Esta proposta foi gerada pela nossa IA avançada e pode ser personalizada conforme suas necessidades específicas.*
-      `;
-      
-      setProposta(propostaGerada);
       setIsLoading(false);
       
       toast({
-        title: "Proposta gerada com sucesso!",
-        description: "Sua proposta personalizada está pronta.",
+        title: "IA em desenvolvimento",
+        description: "Nossa IA está sendo aprimorada para gerar propostas ainda mais precisas!",
       });
     }, 3000);
   };
@@ -213,23 +165,47 @@ Baseado na descrição fornecida: "${descricaoServico}", nossa IA identificou as
                 <CardContent>
                   {proposta ? (
                     <div className="space-y-4">
-                      <div className="bg-muted/30 rounded-lg p-6 border border-border/50">
-                        <pre className="whitespace-pre-wrap text-sm leading-relaxed font-mono">
-                          {proposta}
-                        </pre>
+                      <div className="bg-muted/30 rounded-lg p-6 border border-border/50 relative">
+                        {isLoading ? (
+                          <div className="flex flex-col items-center justify-center py-8 space-y-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                              <Brain className="w-6 h-6 text-primary animate-pulse" />
+                              <div className="flex gap-1">
+                                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" />
+                                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                              </div>
+                            </div>
+                            <div className="text-center space-y-2">
+                              <p className="text-lg font-medium text-primary">IA Analisando...</p>
+                              <p className="text-sm text-muted-foreground animate-pulse">
+                                Processando suas informações para gerar a melhor proposta
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="text-center py-4">
+                            <p className="text-lg text-muted-foreground">
+                              {proposta}
+                            </p>
+                          </div>
+                        )}
                       </div>
                       
-                      <div className="flex gap-3">
-                        <Button variant="outline" className="flex-1">
-                          Baixar PDF
-                        </Button>
-                        <Button variant="outline" className="flex-1">
-                          Enviar por Email
-                        </Button>
-                        <Button variant="default" className="flex-1">
-                          Contratar Serviço
-                        </Button>
-                      </div>
+                      {!isLoading && (
+                        <div className="flex gap-3">
+                          <Button variant="outline" className="flex-1" disabled>
+                            Baixar PDF
+                          </Button>
+                          <Button variant="outline" className="flex-1" disabled>
+                            Enviar por Email
+                          </Button>
+                          <Button variant="default" className="flex-1" disabled>
+                            Contratar Serviço
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
