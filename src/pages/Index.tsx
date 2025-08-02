@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { Brain, Zap, Target, Users, TrendingUp, CheckCircle } from "lucide-react";
-import heroImage from "@/assets/hero-consulting.jpg";
+import heroImage from "@/assets/hero-jiu-jitsu-business.jpg";
 import logoJiuVigor from "@/assets/logo-jiu-vigor.png";
 
 const Index = () => {
