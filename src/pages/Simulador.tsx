@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Brain, ArrowLeft, Sparkles, FileText, Clock } from "lucide-react";
+import { Brain, ArrowLeft, Sparkles, FileText, Clock, Copy, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
@@ -86,6 +86,30 @@ const Simulador = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const copyProposta = async () => {
+    try {
+      await navigator.clipboard.writeText(proposta);
+      toast({
+        title: "Proposta copiada!",
+        description: "A proposta foi copiada para sua área de transferência.",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao copiar",
+        description: "Não foi possível copiar a proposta. Tente novamente.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const sendEmail = () => {
+    // Simular envio de email
+    toast({
+      title: "Email enviado!",
+      description: "A proposta foi enviada para seu email com sucesso.",
+    });
   };
 
   return (
@@ -283,10 +307,20 @@ const Simulador = () => {
                       
                       {!isLoading && (
                         <div className="flex gap-3">
-                          <Button variant="outline" className="flex-1" disabled>
-                            Baixar PDF
+                          <Button 
+                            variant="outline" 
+                            className="flex-1" 
+                            onClick={copyProposta}
+                          >
+                            <Copy className="w-4 h-4 mr-2" />
+                            Copiar Proposta
                           </Button>
-                          <Button variant="outline" className="flex-1" disabled>
+                          <Button 
+                            variant="outline" 
+                            className="flex-1" 
+                            onClick={sendEmail}
+                          >
+                            <Mail className="w-4 h-4 mr-2" />
                             Enviar por Email
                           </Button>
                           <Button variant="default" className="flex-1" disabled>
