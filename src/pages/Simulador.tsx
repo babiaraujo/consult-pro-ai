@@ -46,7 +46,19 @@ const Simulador = () => {
       }
 
       const data = await response.text();
-      setProposta(data);
+      
+      // Tentar parsear como JSON se possível
+      let formattedData;
+      try {
+        const jsonData = JSON.parse(data);
+        formattedData = jsonData.output || data;
+      } catch {
+        formattedData = data;
+      }
+      
+      // Processar quebras de linha
+      const processedData = formattedData.replace(/\\n/g, '\n');
+      setProposta(processedData);
       
       toast({
         title: "Proposta gerada!",
@@ -209,10 +221,10 @@ const Simulador = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="text-center py-4">
-                            <p className="text-lg text-muted-foreground">
+                          <div className="text-left py-4">
+                            <pre className="whitespace-pre-wrap text-sm text-foreground font-normal leading-relaxed">
                               {proposta}
-                            </p>
+                            </pre>
                           </div>
                         )}
                       </div>
