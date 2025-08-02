@@ -27,17 +27,41 @@ const Simulador = () => {
     }
 
     setIsLoading(true);
-    setProposta("Sua proposta sera gerada aqui assim que a IA for conectada");
+    setProposta("");
     
-    // Simulação de processamento da IA
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const response = await fetch('https://babi-imersao.app.n8n.cloud/webhook/gerar-proposta-sistema', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nome_empresa: nomeEmpresa,
+          descricao: descricaoServico
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao gerar proposta');
+      }
+
+      const data = await response.text();
+      setProposta(data);
       
       toast({
-        title: "IA em desenvolvimento",
-        description: "Nossa IA está sendo aprimorada para gerar propostas ainda mais precisas!",
+        title: "Proposta gerada!",
+        description: "Sua proposta personalizada foi criada com sucesso.",
       });
-    }, 3000);
+    } catch (error) {
+      toast({
+        title: "Erro ao gerar proposta",
+        description: "Ocorreu um erro ao conectar com nossa IA. Tente novamente.",
+        variant: "destructive",
+      });
+      setProposta("Erro ao gerar proposta. Tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
