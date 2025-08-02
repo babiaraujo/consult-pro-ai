@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { Brain, Zap, Target, Users, TrendingUp, CheckCircle } from "lucide-react";
 import heroImage from "@/assets/hero-consulting.jpg";
+import logoJiuVigor from "@/assets/logo-jiu-vigor.png";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -59,9 +60,9 @@ const Index = () => {
       {/* Header */}
       <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Brain className="w-8 h-8 text-primary" />
-            <h1 className="text-xl font-bold">ConsultIA Pro</h1>
+          <div className="flex items-center gap-3">
+            <img src={logoJiuVigor} alt="Logo Jiu do Vigor" className="w-10 h-10" />
+            <h1 className="text-xl font-bold">Consultoria Jiu do Vigor</h1>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <a href="#servicos" className="text-sm font-medium hover:text-primary transition-colors">Serviços</a>
@@ -284,11 +285,11 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <Brain className="w-6 h-6 text-primary" />
-              <span className="font-semibold">ConsultIA Pro</span>
+              <img src={logoJiuVigor} alt="Logo Jiu do Vigor" className="w-6 h-6" />
+              <span className="font-semibold">Consultoria Jiu do Vigor</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 ConsultIA Pro. Todos os direitos reservados.
+              © 2024 Consultoria Jiu do Vigor. Todos os direitos reservados.
             </p>
           </div>
         </div>
