@@ -16,5 +16,5 @@ Projeto criado para gerar propostas automatizadas com base em descrição de emp
 3. A IA gera uma proposta personalizada
 4. A resposta é mostrada na tela e salva no banco
 
-🔗 Acesse aqui: https://app.meuprojeto.com
+🔗 Acesse aqui: https://consultoriajiudovigor.escoladnc.com.br/
 
