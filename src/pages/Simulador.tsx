@@ -56,8 +56,18 @@ const Simulador = () => {
         formattedData = data;
       }
       
-      // Processar quebras de linha
-      const processedData = formattedData.replace(/\\n/g, '\n');
+      // Processar e limpar o texto
+      let processedData = formattedData
+        .replace(/\\n/g, '\n')
+        .replace(/^\{?"?output"?:"?/i, '')
+        .replace(/"?\}?$/, '')
+        .trim();
+      
+      // Remover aspas no início e fim se existirem
+      if (processedData.startsWith('"') && processedData.endsWith('"')) {
+        processedData = processedData.slice(1, -1);
+      }
+      
       setProposta(processedData);
       
       toast({
@@ -221,10 +231,50 @@ const Simulador = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="text-left py-4">
-                            <pre className="whitespace-pre-wrap text-sm text-foreground font-normal leading-relaxed">
-                              {proposta}
-                            </pre>
+                          <div className="prose prose-sm max-w-none">
+                            <div className="bg-gradient-to-br from-background to-muted/20 rounded-lg p-6 border-l-4 border-primary">
+                              <div className="space-y-4">
+                                {proposta.split('\n\n').map((paragraph, index) => {
+                                  if (paragraph.trim() === '') return null;
+                                  
+                                  // Verificar se é um título/seção (começa com - ou contém :)
+                                  if (paragraph.includes('- ') || paragraph.includes(':')) {
+                                    return (
+                                      <div key={index} className="space-y-2">
+                                        {paragraph.split('\n').map((line, lineIndex) => {
+                                          if (line.trim().startsWith('- ')) {
+                                            return (
+                                              <div key={lineIndex} className="flex items-start gap-3 py-1">
+                                                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+                                                <p className="text-foreground leading-relaxed">{line.replace('- ', '')}</p>
+                                              </div>
+                                            );
+                                          } else if (line.includes(':') && line.length < 100) {
+                                            return (
+                                              <h4 key={lineIndex} className="font-semibold text-lg text-primary mt-6 mb-2">
+                                                {line}
+                                              </h4>
+                                            );
+                                          } else {
+                                            return (
+                                              <p key={lineIndex} className="text-foreground leading-relaxed">
+                                                {line}
+                                              </p>
+                                            );
+                                          }
+                                        })}
+                                      </div>
+                                    );
+                                  } else {
+                                    return (
+                                      <p key={index} className="text-foreground leading-relaxed text-base">
+                                        {paragraph}
+                                      </p>
+                                    );
+                                  }
+                                })}
+                              </div>
+                            </div>
                           </div>
                         )}
                       </div>
